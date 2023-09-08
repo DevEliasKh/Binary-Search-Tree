@@ -33,11 +33,26 @@ class tree {
 		return root;
 	}
 
-	find() {}
+	find(value, currentNode = this.root) {
+		if (currentNode == null) {
+			return currentNode;
+		}
+		if (currentNode.data != value) {
+			return value > currentNode.data
+				? this.find(value, currentNode.right)
+				: this.find(value, currentNode.left);
+		}
+		return currentNode;
+	}
 
 	levelOrder() {}
 
-	inOrder() {}
+	inOrder(callback) {
+		const root = this.root;
+		let result = [];
+		if (root != null) {
+		}
+	}
 
 	preOrder() {}
 
@@ -87,4 +102,8 @@ function mergeSort(unsortedArray) {
 
 const binaryTree = new tree(sortedArray);
 
-console.log(binaryTree.root);
+// console.log(binaryTree.root.right.right.left.left);
+
+// console.log(binaryTree.find(23));
+
+// console.log(sortedArray);
