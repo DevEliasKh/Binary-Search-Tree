@@ -1,3 +1,6 @@
+const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+let sortedArray = mergeSort(arr);
+
 class Node {
 	constructor(data, left, right) {
 		this.data = data;
@@ -12,18 +15,17 @@ class tree {
 	}
 
 	buildTree(array) {
-		let sortedArray = mergeSort(array);
-		for (let i = 0; i < sortedArray.length; i++) {
-			if (sortedArray[i] == sortedArray[i + 1]) {
-				sortedArray.splice(i, 1);
+		for (let i = 0; i < array.length; i++) {
+			if (array[i] == array[i + 1]) {
+				array.splice(i, 1);
 			}
 		}
 
-		const middle = Math.floor(sortedArray.length / 2);
+		const middle = Math.floor(array.length / 2);
 		const root = new Node(
-			sortedArray[middle],
-			this.buildTree(sortedArray.slice(0, middle)),
-			this.buildTree(sortedArray.slice(middle + 1))
+			array[middle],
+			this.buildTree(array.slice(0, middle)),
+			this.buildTree(array.slice(middle + 1))
 		);
 
 		return root;
@@ -81,7 +83,6 @@ function mergeSort(unsortedArray) {
 	return merge(leftArray, rightArray);
 }
 
-const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const binaryTree = new tree(arr);
+const binaryTree = new tree(sortedArray);
 
 console.log(binaryTree);
