@@ -4,8 +4,8 @@ let sortedArray = mergeSort(arr);
 class Node {
 	constructor(data, left, right) {
 		this.data = data;
-		this.leftChild = left || null;
-		this.rightChild = right || null;
+		this.left = left || null;
+		this.right = right || null;
 	}
 }
 
@@ -15,19 +15,21 @@ class tree {
 	}
 
 	buildTree(array) {
+		let root = null;
 		for (let i = 0; i < array.length; i++) {
 			if (array[i] == array[i + 1]) {
 				array.splice(i, 1);
 			}
 		}
 
-		const middle = Math.floor(array.length / 2);
-		const root = new Node(
-			array[middle],
-			this.buildTree(array.slice(0, middle)),
-			this.buildTree(array.slice(middle + 1))
-		);
-
+		if (array.length != 0) {
+			const middle = Math.floor(array.length / 2);
+			root = new Node(
+				array[middle],
+				this.buildTree(array.slice(0, middle)),
+				this.buildTree(array.slice(middle + 1))
+			);
+		}
 		return root;
 	}
 
@@ -85,4 +87,4 @@ function mergeSort(unsortedArray) {
 
 const binaryTree = new tree(sortedArray);
 
-console.log(binaryTree);
+console.log(binaryTree.root);
