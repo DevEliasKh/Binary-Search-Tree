@@ -78,9 +78,27 @@ class tree {
 		return results;
 	}
 
-	inOrder() {}
+	inOrder(node = this.root, result = []) {
+		if (!this.root) return [];
+		if (node === null) return;
+		this.inOrder(node.left, result);
+		result.push(node.data);
+		this.inOrder(node.right, result);
+		if (result) return result;
+	}
 
-	postOrder() {}
+	postOrder() {
+		if (!this.root) return [];
+		const stack = [this.root];
+		const results = [];
+		while (stack.length) {
+			const current = stack.pop();
+			if (current.left) stack.push(current.left);
+			if (current.right) stack.push(current.right);
+			results.push(current.data);
+		}
+		return results.reverse();
+	}
 
 	height() {}
 
@@ -130,8 +148,12 @@ const binaryTree = new tree(sortedArray);
 
 // console.log(binaryTree.find(23));
 
-console.log(sortedArray);
+// console.log(sortedArray);
 
-console.log(binaryTree.levelOrder());
+// console.log(binaryTree.levelOrder());
 
-console.log(binaryTree.preOrder());
+// console.log(binaryTree.preOrder());
+
+// console.log(binaryTree.inOrder());
+
+console.log(binaryTree.postOrder());
