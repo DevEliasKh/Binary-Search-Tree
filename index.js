@@ -1,4 +1,5 @@
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+// const arr = [1, 3, 2, 4, 8, 10, 11];
 let sortedArray = mergeSort(arr);
 
 class Node {
@@ -23,7 +24,7 @@ class tree {
 		}
 
 		if (array.length != 0) {
-			const middle = Math.floor(array.length / 2);
+			const middle = parseInt(array.length / 2);
 			root = new Node(
 				array[middle],
 				this.buildTree(array.slice(0, middle)),
@@ -45,16 +46,39 @@ class tree {
 		return currentNode;
 	}
 
-	levelOrder() {}
-
-	inOrder(callback) {
-		const root = this.root;
-		let result = [];
-		if (root != null) {
+	levelOrder(callback) {
+		if (!this.root) return [];
+		const queue = [this.root];
+		const results = [];
+		while (queue.length) {
+			let level = [];
+			let size = queue.length;
+			for (let i = 0; i < size; i++) {
+				const node = queue.shift();
+				level.push(node.data);
+				if (node.left) queue.push(node.left);
+				if (node.right) queue.push(node.right);
+				if (callback) callback(node);
+			}
+			results.push(level);
 		}
+		if (!callback) return results;
 	}
 
-	preOrder() {}
+	preOrder() {
+		if (!this.root) return [];
+		const stack = [this.root];
+		const results = [];
+		while (stack.length) {
+			const current = stack.pop();
+			if (current.right) stack.push(current.right);
+			if (current.left) stack.push(current.left);
+			results.push(current.data);
+		}
+		return results;
+	}
+
+	inOrder() {}
 
 	postOrder() {}
 
@@ -102,8 +126,12 @@ function mergeSort(unsortedArray) {
 
 const binaryTree = new tree(sortedArray);
 
-// console.log(binaryTree.root.right.right.left.left);
+// console.log(binaryTree.root.left);
 
 // console.log(binaryTree.find(23));
 
-// console.log(sortedArray);
+console.log(sortedArray);
+
+console.log(binaryTree.levelOrder());
+
+console.log(binaryTree.preOrder());
