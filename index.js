@@ -42,6 +42,36 @@ class tree {
 		return currentNode;
 	}
 
+	delete(value, currentNode = this.root) {
+		if (currentNode === null) return currentNode;
+		if (currentNode.data < value) {
+			currentNode.right = this.delete(value, currentNode.right);
+		} else if (currentNode.data > value) {
+			currentNode.left = this.delete(value, currentNode.left);
+		} else {
+			// node with one child
+			if (currentNode.left === null) {
+				return currentNode.right;
+			} else if (currentNode.right === null) {
+				return currentNode.left;
+			} else {
+				//node with 2 child
+				const minNode = function findNextSmallestChild(Node) {
+					let min = Node.data;
+					let newNode = Node;
+					while (newNode.left != null) {
+						min = root.left.data;
+						newNode = root.left;
+					}
+					return min;
+				};
+				currentNode.data = minNode(currentNode.right);
+				currentNode.right = this.delete(currentNode.data, currentNode.right);
+			}
+		}
+		return currentNode;
+	}
+
 	find(value, currentNode = this.root) {
 		if (currentNode == null) {
 			return currentNode;
@@ -161,10 +191,14 @@ const binaryTree = new tree(sortedArray);
 
 binaryTree.insert(68);
 
+binaryTree.delete(23);
+
 // console.log(binaryTree.levelOrder());
 
-// console.log(binaryTree.inOrder());
+console.log(binaryTree.inOrder());
 
 // console.log(binaryTree.preOrder());
 
 // console.log(binaryTree.postOrder());
+
+console.log(binaryTree.find(23));
