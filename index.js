@@ -34,6 +34,14 @@ class tree {
 		return root;
 	}
 
+	insert(value, currentNode = this.root) {
+		if (currentNode === null) return new Node(value);
+		currentNode.data < value
+			? (currentNode.right = this.insert(value, currentNode.right))
+			: (currentNode.left = this.insert(value, currentNode.left));
+		return currentNode;
+	}
+
 	find(value, currentNode = this.root) {
 		if (currentNode == null) {
 			return currentNode;
@@ -100,7 +108,10 @@ class tree {
 		return results.reverse();
 	}
 
-	height() {}
+	height(node = this.root) {
+		let height = 1;
+		if (node == null) return (height = 0);
+	}
 
 	depth() {}
 
@@ -146,14 +157,14 @@ const binaryTree = new tree(sortedArray);
 
 // console.log(binaryTree.root.left);
 
-// console.log(binaryTree.find(23));
-
 // console.log(sortedArray);
+
+binaryTree.insert(68);
 
 // console.log(binaryTree.levelOrder());
 
-// console.log(binaryTree.preOrder());
-
 // console.log(binaryTree.inOrder());
 
-console.log(binaryTree.postOrder());
+// console.log(binaryTree.preOrder());
+
+// console.log(binaryTree.postOrder());
